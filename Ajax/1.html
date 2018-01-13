@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+</head>
+<body>
+    <input type="button" value="按钮" id="but">
+    <ul id="ul"></ul>
+</body>
+</html>
+<script src="jquery-3.2.1.min.js"></script>
+<script>
+$("#but").click(function(){
+    var myul=document.getElementById("ul");
+    var xhr=new XMLHttpRequest();
+    xhr.open("get","newsList.php",true)
+    xhr.send();
+    xhr.onreadystatechange=function(){
+        if(xhr.readyState==4){
+            if(xhr.status==200){
+               var data = JSON.parse( xhr.responseText );
+                        var myul=document.getElementById("ul");
+                        var fu='';
+                        for (var i=0;i<data.length;i++){
+                            fu+='<li><a href="">'+data[i].title+'</a> [<span>'+data[i].date+'</span>]</li>';
+                        }
+                myul.innerHTML=fu;
+               }
+            else{
+                alert("出错了")
+            }
+           
+           }
+    }
+})
+</script>
